@@ -1,0 +1,22 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - ".:/app"
+    ports:
+      - 3001:3000
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      DB_USER: postgres
+      DB_NAME: mlog
+      DB_PASSWORD: 
+      DB_HOST: db
