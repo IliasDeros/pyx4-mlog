@@ -5,7 +5,8 @@ import configureStore from 'redux-mock-store'
 import App from './App';
 
 const initialState = {
-  authentication: {}
+  authentication: {},
+  movies: []
 }
 const mockStore = configureStore()
 

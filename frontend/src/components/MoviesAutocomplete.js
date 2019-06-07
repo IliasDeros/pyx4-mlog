@@ -1,86 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Autosuggest from 'react-autosuggest';
 import _curry from 'lodash/curry'
 import { connect } from 'react-redux'
-
-const setValue = (setter, e) => setter(e.target.value)
-const handleInput = _curry(setValue)
-
-const languages = [
-  {
-    name: 'C',
-    year: 1972
-  },
-  {
-    name: 'C#',
-    year: 2000
-  },
-  {
-    name: 'C++',
-    year: 1983
-  },
-  {
-    name: 'Clojure',
-    year: 2007
-  },
-  {
-    name: 'Elm',
-    year: 2012
-  },
-  {
-    name: 'Go',
-    year: 2009
-  },
-  {
-    name: 'Haskell',
-    year: 1990
-  },
-  {
-    name: 'Java',
-    year: 1995
-  },
-  {
-    name: 'Javascript',
-    year: 1995
-  },
-  {
-    name: 'Perl',
-    year: 1987
-  },
-  {
-    name: 'PHP',
-    year: 1995
-  },
-  {
-    name: 'Python',
-    year: 1991
-  },
-  {
-    name: 'Ruby',
-    year: 1995
-  },
-  {
-    name: 'Scala',
-    year: 2003
-  }
-];
-
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function getSuggestions(value) {
-  const escapedValue = escapeRegexCharacters(value.trim());
-  
-  if (escapedValue === '') {
-    return [];
-  }
-
-  const regex = new RegExp('^' + escapedValue, 'i');
-
-  return languages.filter(language => regex.test(language.name));
-}
+import { clearMoviesAction, fetchMoviesAction } from '../actions/movieAction'
+import inputHelper from '../helpers/inputHelper'
 
 function getSuggestionValue(suggestion) {
   return suggestion.name;
@@ -88,67 +11,47 @@ function getSuggestionValue(suggestion) {
 
 function renderSuggestion(suggestion) {
   return (
-    <span>{suggestion.name}</span>
+    <span>{suggestion.Title}</span>
   );
 }
 
-class MoviesAutocomplete extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      value: '',
-      suggestions: []
-    };    
-  }
-
-  onChange = (event, { newValue, method }) => {
-    this.setState({
-      value: newValue
-    });
-  };
-  
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
-  };
-
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
-
-  render() {
-    const { value, suggestions } = this.state;
-    const inputProps = {
-      placeholder: "Type 'c'",
-      value,
-      onChange: this.onChange
-    };
-
-    return (
-      <div>
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-        />
-      </div>
-    )
-  }
+function filterMovies(movies, searchTerm) {
+  const regex = new RegExp(`\\b${searchTerm}\\b`, 'i')
+  return movies.filter(movie => movie.Title.match(regex))
 }
 
-const mapStateToProps = ({}) => ({
-  
+const MoviesAutocomplete = ({ clearMovies, fetchMovies, movies }) => {
+  const [value, setValue] = useState('')
+  const inputProps = {
+    placeholder: "Type 'c'",
+    value,
+    onChange: inputHelper.handleInput(setValue)
+  };
+  const fetchSuggestions = ({ value }) => fetchMovies(value)
+  const clearSuggestions = () => clearMovies()
+  const suggestions = filterMovies(movies, value)
+
+  return (
+    <div class="movies-autocomplete">
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={fetchSuggestions}
+        onSuggestionsClearRequested={clearSuggestions}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+      />
+    </div>
+  )
+}
+
+const mapStateToProps = ({ movies }) => ({
+  movies
 })
 
 const mapDispatchToProps = dispatch => ({
-  
+  clearMovies: () => dispatch(clearMoviesAction()),
+  fetchMovies: searchTerm => dispatch(fetchMoviesAction(searchTerm))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoviesAutocomplete)
