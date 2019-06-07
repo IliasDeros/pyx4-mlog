@@ -4,7 +4,15 @@ export default {
   api: '/api',
   fetch: window.fetch.bind(window),
   get,
-  post
+  post,
+  withAPI
+}
+
+function withAPI(apiUrl) {
+  return {
+    ...this,
+    api: apiUrl
+  }
 }
 
 function get(url, params, options) {

@@ -8,6 +8,12 @@ beforeEach(() => {
 })
 
 describe('GET', () => {
+  it('queries with a custom API', () => {
+    requestHelper.withAPI('other api').get('/url')
+    const [url] = fetch.mock.calls[0]
+    expect(url).toBe('other api/url')
+  })
+
   it('request a custom url', () => {
     requestHelper.get('/custom url')
     const [url] = fetch.mock.calls[0]
