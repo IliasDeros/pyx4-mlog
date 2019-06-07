@@ -14,6 +14,8 @@ const Submit = ({ login }) => (
   <input type="submit" onClick={login} value="Log in" />
 )
 
+const EmptySpace = () => <span>&nbsp;</span>
+
 const LoginForm = ({ authentication, login }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,12 +24,14 @@ const LoginForm = ({ authentication, login }) => {
     ? <Requesting />
     : <Submit login={() => login(email, password)} />
 
-  return <form id="signup-form">
-    <input type="email" name="email" id="email" placeholder="Email Address" value={email} onChange={handleInput(setEmail)} />
-    <input type="password" name="password" id="password" placeholder="Password" value={password} onChange={handleInput(setPassword)} />
-    {submitButton}
-    <p>{authentication.error}</p>
-  </form>
+  return <div className="login-form">
+    <form id="signup-form">
+      <input type="email" name="email" id="email" placeholder="Email Address" value={email} onChange={handleInput(setEmail)} />
+      <input type="password" name="password" id="password" placeholder="Password" value={password} onChange={handleInput(setPassword)} />
+      {submitButton}
+    </form>
+    <p className="error text-error">{authentication.error || <EmptySpace />}</p>
+  </div>
 }
 
 const mapStateToProps = ({ authentication }) => ({

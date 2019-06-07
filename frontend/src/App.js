@@ -1,13 +1,32 @@
 import React from 'react';
-import './App.css';
-import LoginForm from './components/LoginForm'
+import { connect } from 'react-redux'
 
-function App() {
+import './App.css';
+import Header from './components/Header'
+import LoginForm from './components/LoginForm'
+import Movies from './components/Movies'
+import Footer from './components/Footer'
+
+function App({ authentication }) {
+  let Content = LoginForm
+
+  if (authentication.user || true /* debugging */) {
+    Content = Movies
+  }
+
   return (
-    <div className="App">
-      <LoginForm />
+    <div>
+      <Header />
+      <Content />
+      <Footer />
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = ({ authentication }) => ({
+  authentication
+})
+
+const mapDispatchToProops = () => ({})
+
+export default connect(mapStateToProps, mapDispatchToProops)(App);

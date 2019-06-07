@@ -1,4 +1,5 @@
 const initialState = {
+  user: null,
   requesting: false,
   error: null
 }
@@ -13,7 +14,8 @@ export default (state = {}, action) => {
       break;
     case 'LOGIN_SUCCESS':
       state = {
-        ...initialState
+        ...initialState,
+        user: action.payload.user
       }
       break;
     case 'LOGIN_FAILURE':

@@ -141,7 +141,6 @@ input, select, textarea {
     }
 
     body > * {
-      position: relative;
       z-index: 2;
     }
 
@@ -613,7 +612,7 @@ input, select, textarea {
 /* Form */
 
   form {
-    margin: 0 0 2em 0;
+    margin: 0 0 1em 0;
   }
 
     form .message {
@@ -1034,6 +1033,10 @@ input, select, textarea {
     line-height: 1.65em;
   }
 
+  #header p + .greeting {
+    margin-top: -1.5em;
+  }
+
   #header a {
     color: inherit;
   }
@@ -1068,50 +1071,56 @@ input, select, textarea {
     position: relative;
   }
 
-    #signup-form input[type="text"],
-    #signup-form input[type="password"],
-    #signup-form input[type="email"] {
-      width: 18em;
+  #signup-form input[type="text"],
+  #signup-form input[type="password"],
+  #signup-form input[type="email"] {
+    width: 18em;
+  }
+
+  #signup-form > * {
+    margin: 0 0 0 1em;
+  }
+
+  #signup-form > :first-child {
+    margin: 0 0 0 0;
+  }
+
+  @media screen and (max-width: 480px) {
+
+    #signup-form {
+      -moz-flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
     }
 
-    #signup-form > * {
-      margin: 0 0 0 1em;
-    }
-
-    #signup-form > :first-child {
-      margin: 0 0 0 0;
-    }
-
-    @media screen and (max-width: 480px) {
-
-      #signup-form {
-        -moz-flex-direction: column;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column;
+      #signup-form input[type="type"],
+      #signup-form input[type="password"],
+      #signup-form input[type="email"] {
+        width: 100%;
       }
 
-        #signup-form input[type="type"],
-        #signup-form input[type="password"],
-        #signup-form input[type="email"] {
-          width: 100%;
-        }
+      #signup-form > * {
+        margin: 1.25em 0 0 0;
+      }
 
-        #signup-form > * {
-          margin: 1.25em 0 0 0;
-        }
+      #signup-form .message {
+        bottom: -1.5em;
+        font-size: 0.9em;
+        height: 1em;
+        left: 0;
+        line-height: inherit;
+        margin-top: 0;
+        position: absolute;
+      }
 
-        #signup-form .message {
-          bottom: -1.5em;
-          font-size: 0.9em;
-          height: 1em;
-          left: 0;
-          line-height: inherit;
-          margin-top: 0;
-          position: absolute;
-        }
+  }
 
+  @media screen and (min-width: 480px) {
+    .login-form .error {
+      text-align: left;
     }
+  }
 
 /* Footer */
 
@@ -1200,3 +1209,7 @@ input, select, textarea {
       }
 
     }
+
+.text-error {
+  color: red;
+}

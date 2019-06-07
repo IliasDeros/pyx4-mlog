@@ -19,7 +19,7 @@ Terminal 2:
 cd frontend && nginx -c $(pwd)/nginx.conf
 
 Terminal 3:
-cd frontend && npm start
+REACT_APP_OMDb_API_KEY=383a2e5d cd frontend && npm start
 
 Browse app on
 http://localhost/

@@ -10,14 +10,15 @@ export const loginAction = (email, password) => async dispatch => {
     if (!response.ok) {
       throw await response.json()
     }
-    loginSuccess()
+    loginSuccess({ email })
   } catch (e) {
     loginFail(e)
   }
 
-  function loginSuccess() {
+  function loginSuccess(user) {
     dispatch({
-      type: 'LOGIN_SUCCESS'
+      type: 'LOGIN_SUCCESS',
+      payload: { user }
     })
   }
 
