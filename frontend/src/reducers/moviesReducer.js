@@ -10,6 +10,7 @@ export default (state = [], action) => {
       break;
     case 'CLEAR_MOVIES':
       state = []
+      break;
     default:
       // no default
   }

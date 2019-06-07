@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import Autosuggest from 'react-autosuggest';
-import _curry from 'lodash/curry'
 import { connect } from 'react-redux'
-import { clearMoviesAction, fetchMoviesAction } from '../actions/movieAction'
+import { clearMoviesAction, fetchMoviesAction, selectMovieAction } from '../actions/movieAction'
 import inputHelper from '../helpers/inputHelper'
+import MoviesAutocompleteSuggestion from './MoviesAutocompleteSuggestion'
+import './MoviesAutocomplete.css'
 
 function getSuggestionValue(suggestion) {
-  return suggestion.name;
-}
-
-function renderSuggestion(suggestion) {
-  return (
-    <span>{suggestion.Title}</span>
-  );
+  return suggestion.Title;
 }
 
 function filterMovies(movies, searchTerm) {
@@ -20,25 +15,27 @@ function filterMovies(movies, searchTerm) {
   return movies.filter(movie => movie.Title.match(regex))
 }
 
-const MoviesAutocomplete = ({ clearMovies, fetchMovies, movies }) => {
+const MoviesAutocomplete = ({ clearMovies, fetchMovies, selectMovie, movies }) => {
   const [value, setValue] = useState('')
   const inputProps = {
     placeholder: "Type 'c'",
-    value,
+    value: value || '',
     onChange: inputHelper.handleInput(setValue)
   };
   const fetchSuggestions = ({ value }) => fetchMovies(value)
   const clearSuggestions = () => clearMovies()
+  const selectSuggestion = (_, { suggestion }) => selectMovie(suggestion)
   const suggestions = filterMovies(movies, value)
 
   return (
-    <div class="movies-autocomplete">
+    <div className="movies-autocomplete">
       <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={fetchSuggestions}
         onSuggestionsClearRequested={clearSuggestions}
+        onSuggestionSelected={selectSuggestion}
         getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
+        renderSuggestion={MoviesAutocompleteSuggestion}
         inputProps={inputProps}
       />
     </div>
@@ -51,7 +48,8 @@ const mapStateToProps = ({ movies }) => ({
 
 const mapDispatchToProps = dispatch => ({
   clearMovies: () => dispatch(clearMoviesAction()),
-  fetchMovies: searchTerm => dispatch(fetchMoviesAction(searchTerm))
+  fetchMovies: searchTerm => dispatch(fetchMoviesAction(searchTerm)),
+  selectMovie: movie => dispatch(selectMovieAction(movie))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoviesAutocomplete)

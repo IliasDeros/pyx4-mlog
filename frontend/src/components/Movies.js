@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import _curry from 'lodash/curry'
+import React from 'react';
 import { connect } from 'react-redux'
 import MoviesAutocomplete from './MoviesAutocomplete'
-
-const setValue = (setter, e) => setter(e.target.value)
-const handleInput = _curry(setValue)
 
 const Movies = () => {
   return <div>
@@ -13,7 +9,7 @@ const Movies = () => {
   </div>
 }
 
-const mapStateToProps = ({  }) => ({
+const mapStateToProps = () => ({
   
 })
 

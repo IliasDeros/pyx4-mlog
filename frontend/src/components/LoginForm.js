@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import _curry from 'lodash/curry'
 import { connect } from 'react-redux'
+import inputHelper from '../helpers/inputHelper'
 import { loginAction } from '../actions/authenticationAction'
-
-const setValue = (setter, e) => setter(e.target.value)
-const handleInput = _curry(setValue)
 
 const Requesting = () => (
   <input type="submit" disabled="disabled" value="Logging in..." />
@@ -26,8 +23,8 @@ const LoginForm = ({ authentication, login }) => {
 
   return <div className="login-form">
     <form id="signup-form">
-      <input type="email" name="email" id="email" placeholder="Email Address" value={email} onChange={handleInput(setEmail)} />
-      <input type="password" name="password" id="password" placeholder="Password" value={password} onChange={handleInput(setPassword)} />
+      <input type="email" name="email" id="email" placeholder="Email Address" value={email} onChange={inputHelper.handleInput(setEmail)} />
+      <input type="password" name="password" id="password" placeholder="Password" value={password} onChange={inputHelper.handleInput(setPassword)} />
       {submitButton}
     </form>
     <p className="error text-error">{authentication.error || <EmptySpace />}</p>

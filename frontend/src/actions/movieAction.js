@@ -31,3 +31,7 @@ export const fetchMoviesAction = searchTerm => async dispatch => {
 export const clearMoviesAction = () => ({
   type: 'CLEAR_MOVIES'
 })
+
+export const selectMovieAction = (movie) => dispatch => {
+  console.log({ movie })
+}
