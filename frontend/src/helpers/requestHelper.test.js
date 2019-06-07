@@ -14,8 +14,14 @@ describe('GET', () => {
     expect(url).toBe('api/custom url')
   })
 
+  it('sends custom params', () => {
+    requestHelper.get('/url', { param1: 'value1', param2: 'value2' })
+    const [url] = fetch.mock.calls[0]
+    expect(url).toEqual('api/url?param1=value1&param2=value2')
+  })
+
   it('sends custom option', () => {
-    requestHelper.get('', { custom: 'option' })
+    requestHelper.get('', null, { custom: 'option' })
     const [_, options] = fetch.mock.calls[0]
     expect(options).toEqual(expect.objectContaining({ custom: 'option' }))
   })

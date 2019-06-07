@@ -1,3 +1,5 @@
+import urlHelper from '../helpers/urlHelper'
+
 export default {
   api: '/api',
   fetch: window.fetch.bind(window),
@@ -5,8 +7,9 @@ export default {
   post
 }
 
-function get(url, options) {
-  return this.fetch(this.api + url, options)
+function get(url, params, options) {
+  const queryUrl = this.api + url + urlHelper.toQuery(params)
+  return this.fetch(queryUrl, options)
 }
 
 function post(url, body = {}, options = {}) {
