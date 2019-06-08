@@ -21,6 +21,45 @@ class UsersController < ApplicationController
   def edit
   end
 
+  # POST /log
+  def log
+    if !current_user
+      return render status: :bad_request, json: { error: "Please sign-in to log movies" }
+    end
+
+    params.require(:title)
+
+    if current_user.movie_logs.detect{|m| m.title === params[:title]}
+      return render status: :bad_request, json: { error: "Movie is already logged" }      
+    end
+
+    movie = MovieLog.new params.permit(:title, :poster_url)
+    movie.user = current_user
+    movie.save
+
+    render status: :ok, json: movie
+  end
+
+  # GET /logs
+  def logs
+    if !current_user
+      return render status: :bad_request, json: { error: "Please sign-in to retrieve user logs" }
+    end
+
+    render status: :ok, json: current_user.movie_logs
+  end
+
+  # DELETE /log
+  def delete_log
+    if !current_user
+      return render status: :bad_request, json: { error: "Please sign-in to remove a log" }
+    end
+
+    movie = MovieLog.find(params[:id])
+    current_user.movie_logs.delete(movie)
+    render status: :ok, json: current_user.movie_logs
+  end
+
   # POST /users
   # POST /users.json
   def create
