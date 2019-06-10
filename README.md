@@ -1,6 +1,7 @@
 # MLog: A pyx4 challenge
 A personal log (Movie log!) of the movies you watched recently
 
+![Screenshot](https://i.ibb.co/ZcJHt5H/image.png)
 
 ### Prerequisites
 
@@ -26,7 +27,7 @@ http://localhost/
 ```
 
 ### User setup
-To create/edit users, use the rails-generated pages from http://localhost:3000/users
+To create/edit users, use the rails-generated pages from http://localhost:3001/users
 
 ### Further Reading
 * [backend](backend/README.md)

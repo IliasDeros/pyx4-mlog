@@ -3,7 +3,7 @@ import movieService from '../services/movieService'
 
 const getJson = _memoize((res => res.json()), res => res.url)
 
-export const fetchMoviesAction = searchTerm => async dispatch => {
+export const fetchMoviesAction = searchTerm => async (dispatch, getState) => {
   dispatch({
     type: 'FETCH_MOVIES_REQUEST',
     payload: { searchTerm }
@@ -21,6 +21,11 @@ export const fetchMoviesAction = searchTerm => async dispatch => {
   }
 
   function fetchSuccess(movies) {
+    const { logs } = getState()
+
+    movies.forEach(movie => 
+      movie.logged = logs.logs.some(log => log.title === movie.Title)
+    )
     dispatch({
       type: 'FETCH_MOVIES_SUCCESS',
       payload: { movies }
@@ -31,7 +36,3 @@ export const fetchMoviesAction = searchTerm => async dispatch => {
 export const clearMoviesAction = () => ({
   type: 'CLEAR_MOVIES'
 })
-
-export const selectMovieAction = (movie) => dispatch => {
-  console.log({ movie })
-}

@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     render status: :ok, json: current_user.movie_logs
   end
 
-  # DELETE /log
+  # DELETE /log/:id
   def delete_log
     if !current_user
       return render status: :bad_request, json: { error: "Please sign-in to remove a log" }

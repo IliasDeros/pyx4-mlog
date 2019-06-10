@@ -64,3 +64,17 @@ describe('POST', () => {
     expect(options).toEqual(expect.objectContaining({ custom: 'option' }))
   })
 })
+
+describe('DELETE', () => {
+  it('request a custom url', () => {
+    requestHelper.del('/custom url')
+    const [url] = fetch.mock.calls[0]
+    expect(url).toBe('api/custom url')
+  })
+
+  it('sends a DELETE request', () => {
+    requestHelper.del()
+    const [_, options] = fetch.mock.calls[0]
+    expect(options.method).toBe('DELETE')
+  })
+})

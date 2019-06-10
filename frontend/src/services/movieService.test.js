@@ -25,3 +25,21 @@ describe('fetchMovies', () => {
     expect(r2).toBe(r3)
   })
 })
+
+describe('fetchLogs', () => {
+  it('queries user logs', () => {
+    movieService.fetchLogs()
+    const [url] = fetch.mock.calls[0]
+    expect(url).toBe('api/logs')
+  })
+})
+
+describe('logMovie', () => {
+  it('adds log', () => {
+    movieService.logMovie({ Title: 't', Poster: 'p' })
+    const [url, options] = fetch.mock.calls[0]
+    expect(url).toBe('api/log')
+    expect(options.method).toBe('POST')
+    expect(options.body).toBe('{"title":"t","poster_url":"p"}')
+  })
+})

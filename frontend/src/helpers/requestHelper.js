@@ -3,6 +3,7 @@ import urlHelper from '../helpers/urlHelper'
 export default {
   api: '/api',
   fetch: window.fetch.bind(window),
+  del,
   get,
   post,
   withAPI
@@ -28,5 +29,14 @@ function post(url, body = {}, options = {}) {
     ...options
   }
   
+  return this.fetch(this.api + url, requestOptions)
+}
+
+function del(url, options) {
+  const requestOptions = {
+    method: 'DELETE',
+    ...options
+  }
+
   return this.fetch(this.api + url, requestOptions)
 }
