@@ -18,7 +18,7 @@ function filterMovies(movies, searchTerm) {
 const MoviesAutocomplete = ({ clearMovies, fetchMovies, selectMovie, movies }) => {
   const [value, setValue] = useState('')
   const inputProps = {
-    placeholder: "Type 'c'",
+    placeholder: "Search for movies",
     value: value || '',
     onChange: inputHelper.handleInput(setValue)
   };
