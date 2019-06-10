@@ -1,5 +1,5 @@
 # MLog: A pyx4 challenge
-A personal log (Movie log!) of the movies you watched recently
+A personal log (Movie log!) of the movies you watched recently. [Trello board](https://trello.com/b/rkhHlX1v/pyx4-technical-test)
 
 ![Screenshot](https://i.ibb.co/ZcJHt5H/image.png)
 
